@@ -21,7 +21,7 @@ def text_node_to_html_node(text_node):
         return leaf_node_object
 
     if text_node.text_type == TextType.LINK:
-        leaf_node_object = LeafNode("a", text_node.text, {"href":text_node.url}) #Need to check this
+        leaf_node_object = LeafNode("a", text_node.text, {"href":text_node.url}) 
         return leaf_node_object
 
     if text_node.text_type == TextType.IMAGE:
