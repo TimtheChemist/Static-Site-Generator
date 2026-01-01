@@ -37,7 +37,7 @@ def split_nodes_delimiter(old_nodes, delimiter, text_type):
 
 
 
-def split_nodes_link(old_nodes): #Need to account for empty text strings + change format to links instead of images
+def split_nodes_link(old_nodes):
     list_of_nodes = []
 
     for old_node in old_nodes:
@@ -82,7 +82,7 @@ def split_nodes_link(old_nodes): #Need to account for empty text strings + chang
     return list_of_nodes
 
 
-def split_nodes_image(old_nodes): #Need to account for empty text strings
+def split_nodes_image(old_nodes):
     list_of_nodes = []
 
     for old_node in old_nodes:
@@ -136,3 +136,16 @@ def extract_markdown_links(text):
 
 
 
+def text_to_textnodes(text):
+    DELIMITERS = ("`", "**", "_")
+
+    processed_text_nodes = [TextNode(text, TextType.TEXT)]
+
+    processed_text_nodes = split_nodes_delimiter(processed_text_nodes, "`", TextType.CODE)
+    processed_text_nodes = split_nodes_delimiter(processed_text_nodes, "_", TextType.ITALIC)
+    processed_text_nodes = split_nodes_delimiter(processed_text_nodes, "**", TextType.BOLD)
+
+    processed_text_nodes = split_nodes_image(processed_text_nodes)
+    processed_text_nodes = split_nodes_link(processed_text_nodes)
+
+    return processed_text_nodes
