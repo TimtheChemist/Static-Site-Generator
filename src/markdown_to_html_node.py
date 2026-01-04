@@ -26,7 +26,9 @@ def markdown_to_html_node(markdown_doc):
             list_of_nodes.append(new_html_node)
 
         elif block_type == BlockType.PARAGRAPH:
-            new_html_node = ParentNode("p", text_to_children(block))
+            new_block_list = block.split("\n")
+            new_block = " ".join(new_block_list)
+            new_html_node = ParentNode("p", text_to_children(new_block))
             list_of_nodes.append(new_html_node)
 
         elif block_type == BlockType.HEADING:
@@ -44,8 +46,13 @@ def markdown_to_html_node(markdown_doc):
             list_of_nodes.append(new_html_node)
 
         elif block_type == BlockType.CODE:
-            new_text_node = TextNode(block.strip("```"), TextType.CODE)
+            new_block_list = block.split("\n")
+            trimmed_block_list = new_block_list[1:-1]
+            new_block = "\n".join(trimmed_block_list) + "\n"
+
+            new_text_node = TextNode(new_block, TextType.CODE)
             new_html_node = text_node_to_html_node(new_text_node)
+            new_html_node = ParentNode("pre" , [new_html_node])
             list_of_nodes.append(new_html_node)
 
     parent_html_node = ParentNode("div", list_of_nodes)
