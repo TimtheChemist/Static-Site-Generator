@@ -3,11 +3,13 @@ from pathlib import Path
 import sys
 sys.path.insert(0, str(Path(__file__).parent.parent))
 from static.copy_static import copy_static
+from generate_page import generate_page
 
 def main():
-    new_object = TextNode("Placeholder text", TextType.BOLD)
-    print(new_object)
-    copy_static("/home/timot/workspace/github.com/Static-Site-Generator/static","/home/timot/workspace/github.com/Static-Site-Generator/public")
+
+    copy_static("static", "public")
+
+    generate_page("content/index.md", "template.html", "public/index.html")
 
 
 main()

@@ -111,7 +111,7 @@ def quote_block_to_children_nodes(block):
         # parse inline markdown into children nodes
         children = text_to_children(item_text)
 
-        quote_nodes.append(ParentNode("p", children))
+        quote_nodes.extend(children)
 
     return quote_nodes
 
