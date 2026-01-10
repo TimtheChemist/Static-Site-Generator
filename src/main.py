@@ -3,13 +3,14 @@ from pathlib import Path
 import sys
 sys.path.insert(0, str(Path(__file__).parent.parent))
 from static.copy_static import copy_static
-from generate_page import generate_page
+from generate_page import generate_page, generate_pages_recursive
+import os
 
 def main():
 
     copy_static("static", "public")
 
-    generate_page("content/index.md", "template.html", "public/index.html")
+    generate_pages_recursive("content", "template.html", "public")
 
 
 main()
