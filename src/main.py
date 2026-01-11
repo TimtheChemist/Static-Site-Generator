@@ -11,6 +11,8 @@ def main():
     copy_static("static", "public")
 
     generate_pages_recursive("content", "template.html", "public")
+    base_path = sys.argv[1] if len(sys.argv) > 1 else "public"
+
 
 
 main()

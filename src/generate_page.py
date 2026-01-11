@@ -23,6 +23,8 @@ def generate_page(from_path, template_path, dest_path):
 
     template_content = template_content.replace("{{ Title }}", page_title)
     template_content = template_content.replace("{{ Content }}", html_content)
+    template_content = template_content.replace('href="/', f'href="{dest_path}/')
+    template_content = template_content.replace('src="/', f'src="{dest_path}/')
 
     new_directory = os.path.dirname(dest_path)
     if not os.path.exists(new_directory):
