@@ -16,6 +16,9 @@ def copy_files_recursive(source_dir_path, dest_dir_path):
 
 def delete_directory_contents(directory_path):
     """Delete all files and subdirectories from a directory."""
+    if not os.path.exists(directory_path):
+        return
+
     try:
         for filename in os.listdir(directory_path):
             file_path = os.path.join(directory_path, filename)
