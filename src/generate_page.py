@@ -10,7 +10,7 @@ def extract_title(markdown):
     raise ValueError("No title found in markdown.")
 
 
-def generate_page(from_path, template_path, dest_path):
+def generate_page(from_path, template_path, dest_path, base_path):
     print(f"Generating page from {from_path} to {dest_path} using {template_path}")
 
     with open(from_path,"r") as f:
@@ -23,8 +23,8 @@ def generate_page(from_path, template_path, dest_path):
 
     template_content = template_content.replace("{{ Title }}", page_title)
     template_content = template_content.replace("{{ Content }}", html_content)
-    template_content = template_content.replace('href="/', f'href="{dest_path}/')
-    template_content = template_content.replace('src="/', f'src="{dest_path}/')
+    template_content = template_content.replace('href="/', f'href="{base_path}')
+    template_content = template_content.replace('src="/', f'src="{base_path}')
 
     new_directory = os.path.dirname(dest_path)
     if not os.path.exists(new_directory):
@@ -35,11 +35,11 @@ def generate_page(from_path, template_path, dest_path):
         print(f"Page generated at {dest_path}")
 
 
-def generate_pages_recursive(content_dir, template_path, public_dir):
+def generate_pages_recursive(content_dir, template_path, public_dir, base_path):
     for root, dirs, files in os.walk(content_dir):
         for file in files:
             if file.endswith(".md"):
                 from_path = os.path.join(root, file)
                 relative_path = os.path.relpath(from_path, content_dir)
                 dest_path = os.path.join(public_dir, relative_path[:-3] + ".html")
-                generate_page(from_path, template_path, dest_path)
+                generate_page(from_path, template_path, dest_path, base_path)
