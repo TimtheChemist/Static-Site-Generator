@@ -1,26 +1,18 @@
 import os
 import shutil
 
-def copy_static(src_dir, des_dir): 
-    if not os.path.exists(src_dir):
-        print("Source directory does not exist.")
-        return
+def copy_files_recursive(source_dir_path, dest_dir_path):
+    if not os.path.exists(dest_dir_path):
+        os.mkdir(dest_dir_path)
 
-    if not os.path.exists(des_dir):
-        print("Destination directory does not exist.")
-        return
-
-    delete_directory_contents(des_dir)
-
-    list_of_dir = os.listdir(path=src_dir)
-    for item in list_of_dir:
-        src_path = os.path.join(src_dir, item)
-        des_path = os.path.join(des_dir, item)
-        if os.path.isdir(src_path):
-            os.mkdir(des_path)
-            copy_static(src_path, des_path)
+    for filename in os.listdir(source_dir_path):
+        from_path = os.path.join(source_dir_path, filename)
+        dest_path = os.path.join(dest_dir_path, filename)
+        print(f" * {from_path} -> {dest_path}")
+        if os.path.isfile(from_path):
+            shutil.copy(from_path, dest_path)
         else:
-            shutil.copy2(src_path, des_path)        
+            copy_files_recursive(from_path, dest_path)     
 
 def delete_directory_contents(directory_path):
     """Delete all files and subdirectories from a directory."""
